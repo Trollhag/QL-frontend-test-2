@@ -123,7 +123,7 @@ function App() {
               onChange={e => {
                 const value = e.target.value.replace(/\D/g, '')
                 setCardNumber(value)
-                if (formErrors.cardNumber && cardType.validateNumbers(value)) {
+                if (formErrors.cardNumber) {
                   setFormErrors({ ...formErrors, cardNumber: false })
                 } 
               }}
@@ -177,7 +177,12 @@ function App() {
               <Label>
                 <br/>
                 <Select
-                  onChange={e => setCardExpiration([cardExpiration[0], parseInt(e.target.value)])}
+                  onChange={e => {
+                    setCardExpiration([cardExpiration[0], parseInt(e.target.value)])
+                    if (formErrors.cardExpiration && validateCardExpirationDate(cardExpiration)) {
+                      setFormErrors({ ...formErrors, cardExpiration: false })
+                    }
+                  }}
                   onBlur={() => setFormErrors({ ...formErrors, cardExpiration: !validateCardExpirationDate(cardExpiration) })}
                   value={cardExpiration[1]}
                 >
@@ -197,7 +202,7 @@ function App() {
               onChange={e => {
                 const value = e.target.value.replace(/\D/g, '');
                 setCardCVV(value)
-                if (formErrors.cardCVV && cardType.validateCVV(value)) {
+                if (formErrors.cardCVV) {
                   setFormErrors({ ...formErrors, cardCVV: false })
                 }
               }}
