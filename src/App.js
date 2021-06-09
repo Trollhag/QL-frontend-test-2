@@ -1,11 +1,14 @@
-import { useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Transition, SwitchTransition } from 'react-transition-group'
-import styled, { createGlobalStyle, keyframes } from 'styled-components/macro'
+import { createGlobalStyle } from 'styled-components'
 import { Container, Grid, Column } from './styled/Grid'
 import { Label, Input, Select, inputValidation } from './styled/Input'
 import Button from './styled/Buttons';
 import { Card } from './styled/Card'
+import { AnimateText } from './styled/Animations'
 import { pad, cardTypes, validateCardExpirationDate } from './utils'
+
+import cardBackground from 'url:../assets/card-background.jpg'
 
 const Styles = createGlobalStyle`
   * {
@@ -31,31 +34,6 @@ const Styles = createGlobalStyle`
   img {
     max-width: 100%;
   }
-`
-
-const slideUpIn = keyframes`
-  0% {
-    transform: translateY(.5em);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0em);
-    opacity: 1;
-  }
-`
-
-function AnimateText({ children }) {
-  return children.map((char, i) => ' ' === char ? ' ' : (
-    <SwitchTransition key={i} mode="out-in">
-      <Transition key={i} timeout={150}>
-        <AnimateText.Char>{char}</AnimateText.Char>
-      </Transition>
-    </SwitchTransition>
-  ))
-}
-AnimateText.Char = styled.span`
-  animation: ${slideUpIn} 150ms ease;
-  display: inline-block;
 `
 
 function App() {
@@ -89,7 +67,7 @@ function App() {
       <div>
         <Card.Wrapper flip={flipCard}>
           <Card.Frontside>
-            <Card src="card-background.jpg"/>
+            <Card src={cardBackground}/>
             <SwitchTransition mode="out-in">
               <Transition
                 key={cardType.key}
@@ -112,7 +90,7 @@ function App() {
             </Card.Expiration>
           </Card.Frontside>
           <Card.Backside>
-            <Card src="card-background.jpg"/>
+            <Card src={cardBackground}/>
             <Card.CVV> <AnimateText>{Array(cardCVV.length).fill('*')}</AnimateText></Card.CVV>
             <Card.Backside.LogoWrapper>
               {cardType.logo}

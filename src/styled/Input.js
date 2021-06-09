@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/macro'
+import styled, { css } from 'styled-components'
 
 const validationBase = css`
     transition: outline .2s ease;

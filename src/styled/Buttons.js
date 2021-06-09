@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro'
+import styled from 'styled-components'
 
 const Button = styled.button.attrs({ type: 'button' })`
   font-size: 22px;

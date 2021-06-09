@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function pad(n) {
   if (n <= 9)
     return `0${n}`
@@ -13,12 +15,48 @@ export function validateCardExpirationDate([month, year]) {
   return true;
 }
 
+const cardLogos = {
+  visa: {
+    webp: require('url:../assets/logos/visa.png?as=webp'),
+    png: require('url:../assets/logos/visa.png'),
+  },
+  maestro: {
+    webp: require('url:../assets/logos/maestro.png?as=webp'),
+    png: require('url:../assets/logos/maestro.png'),
+  },
+  mastercard: {
+    webp: require('url:../assets/logos/mastercard.png?as=webp'),
+    png: require('url:../assets/logos/mastercard.png'),
+  },
+  american_express: {
+    webp: require('url:../assets/logos/american-express.png?as=webp'),
+    png: require('url:../assets/logos/american-express.png'),
+  },
+  diners_club_international: {
+    webp: require('url:../assets/logos/diners-club-international.png?as=webp'),
+    png: require('url:../assets/logos/diners-club-international.png'),
+  },
+  discover: {
+    webp: require('url:../assets/logos/discover.png?as=webp'),
+    png: require('url:../assets/logos/discover.png'),
+  },
+  jcb: {
+    webp: require('url:../assets/logos/jcb.png?as=webp'),
+    png: require('url:../assets/logos/jcb.png'),
+  },
+}
+
 const defaultNumberValidation = minLength => number => new RegExp(`^\\d{${minLength}}$`).test(number)
 const defaultCVVValidation = (minLength = 3, maxLength = 4) => number => new RegExp(`^\\d{${minLength},${maxLength}}$`).test(number)
 const defaultCardFormat = number => [...number.match(/(.{0,4})/g)].slice(0, -1).join(' ')
 export const cardTypes = [{
   key: 'visa',
-  logo: <img width="110" src="logos/visa.png" alt="Visa" />,
+  logo: (
+    <picture>
+      <source srcSet={cardLogos.visa.webp} type="image/webp" />
+      <img width="110" src={cardLogos.visa.png} alt="Visa" />
+    </picture>
+  ),
   checkBIN: number => '4' === number.charAt(0),
   minLength: 16,
   maxLength: 16,
@@ -28,7 +66,12 @@ export const cardTypes = [{
   validateCVV: defaultCVVValidation(),
 }, {
   key: 'maestro',
-  logo: <img width="110" src="logos/maestro.png" alt="Maestro" />,
+  logo: (
+    <picture>
+      <source srcSet={cardLogos.maestro.webp} type="image/webp" />
+      <img width="110" src={cardLogos.maestro.png} alt="Maestro" />
+    </picture>
+  ),
   checkBIN: number => '50' === number.slice(0, 2) || (56 <= parseInt(number.slice(0, 2)) && 58 >= parseInt(number.slice(0, 2))) ||
     '6' === number.charAt(0),
   minLength: 16,
@@ -39,7 +82,12 @@ export const cardTypes = [{
   validateCVV: defaultCVVValidation(),
 }, {
   key: 'mastercard',
-  logo: <img width="130" src="logos/mastercard.png" alt="MasterCard" />,
+  logo: (
+    <picture>
+      <source srcSet={cardLogos.mastercard.webp} type="image/webp" />
+      <img width="130" src={cardLogos.mastercard.png} alt="MasterCard" />
+    </picture>
+  ),
   checkBIN: number => (2221 <= parseInt(number.slice(0, 4)) && 2720 >= parseInt(number.slice(0, 4))) ||
     (51 <= parseInt(number.slice(0, 2)) && 55 >= parseInt(number.slice(0, 2))),
   minLength: 16,
@@ -50,7 +98,12 @@ export const cardTypes = [{
   validateCVV: defaultCVVValidation(),
 }, {
   key: 'american-express',
-  logo: <img width="110" src="logos/american-express.png" alt="American Express" />,
+  logo: (
+    <picture>
+      <source srcSet={cardLogos.american_express.webp} type="image/webp" />
+      <img width="110" src={cardLogos.american_express.png} alt="American Express" />
+    </picture>
+  ),
   checkBIN: number => ['34', '37'].indexOf(number.slice(0, 2)) >= 0,
   minLength: 15,
   maxLength: 15,
@@ -60,7 +113,12 @@ export const cardTypes = [{
   validateCVV: defaultCVVValidation(),
 }, {
   key: 'diners-club-international',
-  logo: <img width="110" src="logos/diners-club.png" alt="Diners Club International" />,
+  logo: (
+    <picture>
+      <source srcSet={cardLogos.diners_club_international.webp} type="image/webp" />
+      <img width="110" src={cardLogos.diners_club_international.png} alt="Diners Club International" />
+    </picture>
+  ),
   checkBIN: number => '36' === number.slice(0, 2),
   minLength: 14,
   maxLength: 14,
@@ -70,7 +128,12 @@ export const cardTypes = [{
   validateCVV: defaultCVVValidation(),
 }, {
   key: 'discover',
-  logo: <img width="110" src="logos/discover.png" alt="Discover" />,
+  logo: (
+    <picture>
+      <source srcSet={cardLogos.discover.webp} type="image/webp" />
+      <img width="110" src={cardLogos.discover.png} alt="Discover" />
+    </picture>
+  ),
   checkBIN: number => '6011' === number.slice(0, 4) || (622126 <= parseInt(number.slice(0, 6)) && 622925 >= parseInt(number.slice(0, 6))) ||
     (644 <= parseInt(number.slice(0, 3)) && 649 >= parseInt(number.slice(0, 3))) || '110' === number.slice(0, 2),
   minLength: 16,
@@ -81,7 +144,12 @@ export const cardTypes = [{
   validateCVV: defaultCVVValidation(),
 }, {
   key: 'jcb',
-  logo: <img width="110" src="logos/jcb.png" alt="JCB" />,
+  logo: (
+    <picture>
+      <source srcSet={cardLogos.jcb.webp} type="image/webp" />
+      <img width="110" src={cardLogos.jcb.png} alt="JCB" />
+    </picture>
+  ),
   checkBIN: number => 3528 <= parseInt(number.slice(0, 4)) && 3589 >= parseInt(number.slice(0, 4)),
   minLength: 16,
   maxLength: 16,
