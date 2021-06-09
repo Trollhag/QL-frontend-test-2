@@ -22,9 +22,6 @@
     "start:dev": "parcel src/index.html",
     "build": "parcel build src/index.html --no-cache"
   },
-  "engines": {
-    "node": "16.2.0"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
