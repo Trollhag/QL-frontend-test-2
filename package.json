@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "@parcel/transformer-image": "^2.0.0-beta.3.1",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "core-js": "^3.13.1",
-    "parcel": "^2.0.0-beta.3.1",
+    "parcel-bundler": "^1.12.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-transition-group": "^4.4.2",

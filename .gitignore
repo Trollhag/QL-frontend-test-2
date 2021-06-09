@@ -12,7 +12,7 @@
 /dist
 
 # misc
-.parcel-cache
+.cache
 .DS_Store
 .env.local
 .env.development.local

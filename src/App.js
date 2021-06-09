@@ -8,7 +8,7 @@ import { Card } from './styled/Card'
 import { AnimateText } from './styled/Animations'
 import { pad, cardTypes, validateCardExpirationDate } from './utils'
 
-import cardBackground from 'url:../assets/card-background.jpg'
+import cardBackground from '../assets/card-background.jpg'
 
 const Styles = createGlobalStyle`
   * {
