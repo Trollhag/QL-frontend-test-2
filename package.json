@@ -18,7 +18,8 @@
     "styled-components": "^5.3.0"
   },
   "scripts": {
-    "start": "parcel src/index.html",
+    "start": "serve dist",
+    "start:dev": "parcel src/index.html",
     "build": "parcel build src/index.html"
   },
   "engines": {
