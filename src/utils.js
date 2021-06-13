@@ -7,7 +7,7 @@ export function pad(n) {
 }
 
 export function validateCardExpirationDate([month, year]) {
-  if (month && year) {
+  if (month >= 0 && year) {
     // Get last day of selected month and year.
     const date = new Date(year, month + 1, 0, 23, 59, 0, 0);
     return new Date() < date;

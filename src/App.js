@@ -86,7 +86,7 @@ function App() {
             </Card.Holder>
             <Card.Expiration>
               <Card.Label>Expires</Card.Label>
-              <AnimateText>{(!cardExpiration[0] ? 'MM' : String(pad(cardExpiration[0] + 1))).split('')}</AnimateText>
+              <AnimateText>{(!cardExpiration[0] >= 0 ? 'MM' : String(pad(cardExpiration[0] + 1))).split('')}</AnimateText>
               /
               <AnimateText>{(!cardExpiration[1] ? 'YY' : String(cardExpiration[1]).slice(-2)).split('')}</AnimateText>
             </Card.Expiration>
@@ -166,12 +166,11 @@ function App() {
                   autoComplete="cc-exp-month"
                   onChange={e => {
                     setCardExpiration([parseInt(e.target.value), cardExpiration[1]])
-                    if (formErrors.cardExpiration && validateCardExpirationDate(cardExpiration)) {
-                      setFormErrors({ ...formErrors, cardExpiration: false })
+                    if (cardExpiration[1]) {
+                      setFormErrors({ ...formErrors, cardExpiration: !validateCardExpirationDate([parseInt(e.target.value), cardExpiration[1]]) })
                     }
                   }}
-                  onBlur={() => setFormErrors({ ...formErrors, cardExpiration: !validateCardExpirationDate(cardExpiration) })}
-                  value={cardExpiration[0]}
+                  value={String(cardExpiration[0])}
                 >
                   {'' === cardExpiration[0] && <option value="">Month</option>}
                   {Array(12).fill(null).map((_,i) => <option key={i} value={String(i)}>{pad(i + 1)}</option>)}
@@ -185,11 +184,10 @@ function App() {
                   autoComplete="cc-exp-year"
                   onChange={e => {
                     setCardExpiration([cardExpiration[0], parseInt(e.target.value)])
-                    if (formErrors.cardExpiration && validateCardExpirationDate(cardExpiration)) {
-                      setFormErrors({ ...formErrors, cardExpiration: false })
+                    if (cardExpiration[0] >= 0) {
+                      setFormErrors({ ...formErrors, cardExpiration: !validateCardExpirationDate([cardExpiration[0], parseInt(e.target.value)]) })
                     }
                   }}
-                  onBlur={() => setFormErrors({ ...formErrors, cardExpiration: !validateCardExpirationDate(cardExpiration) })}
                   value={cardExpiration[1]}
                 >
                   {'' === cardExpiration[1] && <option value="">Year</option>}

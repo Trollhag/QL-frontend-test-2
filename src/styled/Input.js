@@ -25,7 +25,6 @@ const styledInput = css`
   width: 100%;
   padding: 10px 12px;
   font-size: 1rem;
-  margin-bottom: 15px;
   ${({ error }) => error ? inputValidation.error : inputValidation.base}
 `
 
