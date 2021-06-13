@@ -84,7 +84,7 @@ export const cardTypes = [{
   key: 'discover',
   logo: <img width="110" src={cardLogos.discover} alt="Discover" />,
   checkBIN: number => '6011' === number.slice(0, 4) || (622126 <= parseInt(number.slice(0, 6)) && 622925 >= parseInt(number.slice(0, 6))) ||
-    (644 <= parseInt(number.slice(0, 3)) && 649 >= parseInt(number.slice(0, 3))) || '110' === number.slice(0, 2),
+    (644 <= parseInt(number.slice(0, 3)) && 649 >= parseInt(number.slice(0, 3))) || '110' === number.slice(0, 3),
   minLength: 16,
   maxLength: 16,
   maxColumns: 3,
