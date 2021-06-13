@@ -61,6 +61,8 @@ function App() {
     }
   }, [cardNumber])
 
+  const year = useMemo(() => new Date().getFullYear(), [])
+
   return (
     <Container>
       <Styles />
@@ -84,14 +86,14 @@ function App() {
             </Card.Holder>
             <Card.Expiration>
               <Card.Label>Expires</Card.Label>
-              <AnimateText>{(!cardExpiration[0] ? 'MM' : pad(cardExpiration[0] + 1)).split('')}</AnimateText>
+              <AnimateText>{(!cardExpiration[0] ? 'MM' : String(pad(cardExpiration[0] + 1))).split('')}</AnimateText>
               /
               <AnimateText>{(!cardExpiration[1] ? 'YY' : String(cardExpiration[1]).slice(-2)).split('')}</AnimateText>
             </Card.Expiration>
           </Card.Frontside>
           <Card.Backside>
             <Card src={cardBackground}/>
-            <Card.CVV> <AnimateText>{Array(cardCVV.length).fill('*')}</AnimateText></Card.CVV>
+            <Card.CVV><AnimateText>{Array(cardCVV.length).fill('*')}</AnimateText></Card.CVV>
             <Card.Backside.LogoWrapper>
               {cardType.logo}
             </Card.Backside.LogoWrapper>
@@ -119,6 +121,7 @@ function App() {
             Card Number
             <Input
               type="text"
+              autoComplete="cc-number"
               maxLength={cardType.maxLength + cardType.maxColumns}
               onChange={e => {
                 const value = e.target.value.replace(/\D/g, '')
@@ -140,6 +143,7 @@ function App() {
             Card Name
             <Input
               type="text"
+              autoComplete="cc-name"
               maxLength={34}
               onChange={e => {
                 setCardName(e.target.value)
@@ -159,6 +163,7 @@ function App() {
               <Label>
                 Exipration
                 <Select
+                  autoComplete="cc-exp-month"
                   onChange={e => {
                     setCardExpiration([parseInt(e.target.value), cardExpiration[1]])
                     if (formErrors.cardExpiration && validateCardExpirationDate(cardExpiration)) {
@@ -168,8 +173,8 @@ function App() {
                   onBlur={() => setFormErrors({ ...formErrors, cardExpiration: !validateCardExpirationDate(cardExpiration) })}
                   value={cardExpiration[0]}
                 >
-                  {'' === cardExpiration[0] && <option>Month</option>}
-                  {Array(12).fill(null).map((_,i) => <option key={i} value={i}>{pad(i + 1)}</option>)}
+                  {'' === cardExpiration[0] && <option value="">Month</option>}
+                  {Array(12).fill(null).map((_,i) => <option key={i} value={String(i)}>{pad(i + 1)}</option>)}
                 </Select>
               </Label>
             </Column>
@@ -177,6 +182,7 @@ function App() {
               <Label>
                 <br/>
                 <Select
+                  autoComplete="cc-exp-year"
                   onChange={e => {
                     setCardExpiration([cardExpiration[0], parseInt(e.target.value)])
                     if (formErrors.cardExpiration && validateCardExpirationDate(cardExpiration)) {
@@ -186,8 +192,8 @@ function App() {
                   onBlur={() => setFormErrors({ ...formErrors, cardExpiration: !validateCardExpirationDate(cardExpiration) })}
                   value={cardExpiration[1]}
                 >
-                  {'' === cardExpiration[1] && <option>Year</option>}
-                  {Array(10).fill(null).map((_,i) => <option key={i} value={new Date().getFullYear() + i}>{new Date().getFullYear() + i}</option>)}
+                  {'' === cardExpiration[1] && <option value="">Year</option>}
+                  {Array(10).fill(null).map((_,i) => <option key={i} value={String(year + i)}>{year + i}</option>)}
                 </Select>
               </Label>
             </Column>
@@ -198,6 +204,7 @@ function App() {
             CVV
             <Input
               type="text"
+              autoComplete="cc-csc"
               maxLength="4"
               onChange={e => {
                 const value = e.target.value.replace(/\D/g, '');
