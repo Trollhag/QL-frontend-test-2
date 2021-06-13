@@ -32,7 +32,7 @@ Card.Backside = styled(Card.Frontside)`
 Card.Wrapper = styled.div`
   position: relative;
   width: 400px;
-  max-width: 80%;
+  max-width: 100%;
   margin: -30% auto 30px;
   font-family: 'Roboto Mono', monospace;
   font-weight: bold;
@@ -52,10 +52,13 @@ Card.Label = styled.span`
   width: 100%;
   transform: translateY(-100%);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 10px;
   text-transform: none;
   letter-spacing: normal;
   opacity: .7;
+  @media (min-width: 500px) {
+    font-size: 12px;
+  }
 `
 Card.LogoWrapper = styled.div`
   position: absolute;
@@ -79,13 +82,16 @@ Card.Number = styled.p`
   left: 0;
   right: 0;
   transform: translateY(-50%);
-  font-size: 22px;
+  font-size: 18px;
   margin: 0;
   padding: 0 20px;
+  @media (min-width: 500px) {
+    font-size: 22px;
+  }
 `;
 Card.Number.Part = styled.span`
   display: inline-block;
-  margin-right: 20px;
+  margin-right: .8em;
 `
 Card.Holder = styled.p`
   position: absolute;
@@ -93,9 +99,12 @@ Card.Holder = styled.p`
   left: 20px;
   right: 20px;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
   min-height: 1.3em;
+  @media (min-width: 500px) {
+    font-size: 16px;
+  }
 `
 Card.Expiration = styled.p`
   text-align: right;
@@ -103,9 +112,12 @@ Card.Expiration = styled.p`
   bottom: 20px;
   right: 20px;
   width: 100px;
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
   min-height: 1.3em;
+  @media (min-width: 500px) {
+    font-size: 16px;
+  }
 `
 Card.Backside.LogoWrapper = styled.div`
   position: absolute;
@@ -120,9 +132,13 @@ Card.CVV = styled.pre`
   right: 20px;
   padding: 6px 12px;
   border-radius: 4px;
+  font-size: 14px;
   letter-spacing: normal;
   background-color: #fff;
   text-align: right;
   color: #000;
   transform: translateY(-50%);
+  @media (min-width: 500px) {
+    font-size: 18px;
+  }
 `

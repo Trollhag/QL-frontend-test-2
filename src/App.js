@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react'
 import { Transition, SwitchTransition } from 'react-transition-group'
-import { createGlobalStyle } from 'styled-components'
 import { Container, Grid, Column } from './styled/Grid'
 import { Label, Input, Select, inputValidation } from './styled/Input'
 import Button from './styled/Buttons';
@@ -9,32 +8,6 @@ import { AnimateText } from './styled/Animations'
 import { pad, cardTypes, validateCardExpirationDate } from './utils'
 
 import cardBackground from '../assets/card-background.jpg'
-
-const Styles = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-  }
-  html {
-    font-size: 18px;
-    font-family: 'Roboto', --apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  }
-  body {
-    position: relative;
-    margin: 0;
-    background-color: peachpuff;
-    height: 100%;
-    min-height: 100vh;
-  }
-  #root {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    min-height: 100vh;
-  }
-  img {
-    max-width: 100%;
-  }
-`
 
 function App() {
   const [flipCard, setFlipCard] = useState(false)
@@ -65,41 +38,38 @@ function App() {
 
   return (
     <Container>
-      <Styles />
-      <div>
-        <Card.Wrapper flip={flipCard}>
-          <Card.Frontside>
-            <Card src={cardBackground}/>
-            <SwitchTransition mode="out-in">
-              <Transition
-                key={cardType.key}
-                timeout={150}
-                children={state => (
-                  <Card.LogoWrapper className={state}>{cardType.logo}</Card.LogoWrapper>
-                )}
-              />
-            </SwitchTransition>
-            <Card.Number>{previewNumber}</Card.Number>
-            <Card.Holder>
-              <Card.Label>Card Holder</Card.Label>
-              <AnimateText>{(cardName || 'John Smith').split('')}</AnimateText>
-            </Card.Holder>
-            <Card.Expiration>
-              <Card.Label>Expires</Card.Label>
-              <AnimateText>{(!cardExpiration[0] >= 0 ? 'MM' : String(pad(cardExpiration[0] + 1))).split('')}</AnimateText>
-              /
-              <AnimateText>{(!cardExpiration[1] ? 'YY' : String(cardExpiration[1]).slice(-2)).split('')}</AnimateText>
-            </Card.Expiration>
-          </Card.Frontside>
-          <Card.Backside>
-            <Card src={cardBackground}/>
-            <Card.CVV>&nbsp;<AnimateText>{Array(cardCVV.length).fill('*')}</AnimateText></Card.CVV>
-            <Card.Backside.LogoWrapper>
-              {cardType.logo}
-            </Card.Backside.LogoWrapper>
-          </Card.Backside>
-        </Card.Wrapper>
-      </div>
+      <Card.Wrapper flip={flipCard}>
+        <Card.Frontside>
+          <Card src={cardBackground}/>
+          <SwitchTransition mode="out-in">
+            <Transition
+              key={cardType.key}
+              timeout={150}
+              children={state => (
+                <Card.LogoWrapper className={state}>{cardType.logo}</Card.LogoWrapper>
+              )}
+            />
+          </SwitchTransition>
+          <Card.Number>{previewNumber}</Card.Number>
+          <Card.Holder>
+            <Card.Label>Card Holder</Card.Label>
+            <AnimateText>{(cardName || 'John Smith').split('')}</AnimateText>
+          </Card.Holder>
+          <Card.Expiration>
+            <Card.Label>Expires</Card.Label>
+            <AnimateText>{(!cardExpiration[0] >= 0 ? 'MM' : String(pad(cardExpiration[0] + 1))).split('')}</AnimateText>
+            /
+            <AnimateText>{(!cardExpiration[1] ? 'YY' : String(cardExpiration[1]).slice(-2)).split('')}</AnimateText>
+          </Card.Expiration>
+        </Card.Frontside>
+        <Card.Backside>
+          <Card src={cardBackground}/>
+          <Card.CVV>&nbsp;<AnimateText>{Array(cardCVV.length).fill('*')}</AnimateText></Card.CVV>
+          <Card.Backside.LogoWrapper>
+            {cardType.logo}
+          </Card.Backside.LogoWrapper>
+        </Card.Backside>
+      </Card.Wrapper>
       <Grid
         as="form"
         onSubmit={event => {
@@ -184,14 +154,14 @@ function App() {
                   autoComplete="cc-exp-year"
                   onChange={e => {
                     setCardExpiration([cardExpiration[0], parseInt(e.target.value)])
-                    if (cardExpiration[0] >= 0) {
+                    if (cardExpiration[0] !== '' && cardExpiration[0] >= 0) {
                       setFormErrors({ ...formErrors, cardExpiration: !validateCardExpirationDate([cardExpiration[0], parseInt(e.target.value)]) })
                     }
                   }}
                   value={cardExpiration[1]}
                 >
                   {'' === cardExpiration[1] && <option value="">Year</option>}
-                  {Array(10).fill(null).map((_,i) => <option key={i} value={String(year + i)}>{year + i}</option>)}
+                  {Array(11).fill(null).map((_,i) => <option key={i} value={String(year + i)}>{year + i}</option>)}
                 </Select>
               </Label>
             </Column>
