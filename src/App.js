@@ -93,7 +93,7 @@ function App() {
           </Card.Frontside>
           <Card.Backside>
             <Card src={cardBackground}/>
-            <Card.CVV><AnimateText>{Array(cardCVV.length).fill('*')}</AnimateText></Card.CVV>
+            <Card.CVV>&nbsp;<AnimateText>{Array(cardCVV.length).fill('*')}</AnimateText></Card.CVV>
             <Card.Backside.LogoWrapper>
               {cardType.logo}
             </Card.Backside.LogoWrapper>
